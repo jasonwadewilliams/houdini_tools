@@ -1,0 +1,22 @@
+import toolutils
+import soptoolutils
+from soptoolutils import OrientInfo
+
+#create nodes
+stage = hou.node('/stage')
+subnet = stage.createNode('subnet','Name')
+
+sop_create = subnet.createNode('sopcreate','Name')
+mat_lib = subnet.createNode('materiallibrary')
+mat_assign = subnet.createNode('assignmaterial')
+output_null = subnet.createNode('null','OUT')
+
+
+#set inputs
+mat_lib.setInput(0, sop_create, 0)
+mat_assign.setInput(0, mat_lib, 0)
+subnet.layoutChildren()
+
+#set display
+output_null.setDisplayFlag(True)
+sop_create.setRenderFlag(False)
